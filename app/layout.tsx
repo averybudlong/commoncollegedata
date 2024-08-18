@@ -1,27 +1,37 @@
-import { GeistSans } from "geist/font/sans";
+import type { Metadata } from "next";
+import {
+  Inter,
+  Open_Sans,
+  Roboto_Slab,
+  Inconsolata,
+  Cutive,
+} from "next/font/google";
 import "./globals.css";
+import RootLayoutClient from "./RootLayoutClient";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+const inter = Inter({ subsets: ["latin"] });
+const openSans = Open_Sans({ subsets: ["latin"] });
+const robotoSlab = Roboto_Slab({ subsets: ["latin"] });
+const inconsolata = Inconsolata({ subsets: ["latin"] });
+const cutive = Cutive({ weight: "400", subsets: ["latin"] });
 
-export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+export const metadata: Metadata = {
+  title: "College Common Data Set Information",
+  description: "Search and view college Common Data Set information",
 };
 
-export default function RootLayout({
-  children,
-}: {
+type RootLayoutProps = {
   children: React.ReactNode;
-}) {
+};
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
-          {children}
-        </main>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={inter.className}
+        style={{ backgroundColor: "hsl(var(--main-background))" }}
+      >
+        <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
   );
