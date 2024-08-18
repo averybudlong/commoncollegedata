@@ -1,13 +1,14 @@
 "use client";
 
 import SearchBar from "../components/SearchBar";
+import SemanticSearcBar from "../components/SemanticSearchBar";
 import CollegeCard from "../components/CollegeCard";
 import { Courier_Prime } from "next/font/google";
 import { useEffect, useMemo, useState } from "react";
 import { College } from "@/types/College";
 import { Button } from "@/components/ui/button";
 
-const CARDS_PER_PAGE = 12;
+const CARDS_PER_PAGE = 24;
 
 interface HomeClientProps {
   initialColleges: College[];
@@ -17,6 +18,7 @@ const courierPrime = Courier_Prime({ subsets: ["latin"], weight: "700" });
 
 export default function HomeClient({ initialColleges }: HomeClientProps) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [semanticSearchTerm, setSemanticSearchTerm] = useState("");
   const [page, setPage] = useState(1);
 
   const filteredColleges = useMemo(() => {
@@ -31,6 +33,11 @@ export default function HomeClient({ initialColleges }: HomeClientProps) {
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
+  };
+
+  const handleSemanticSearch = (term: string) => {
+    console.log(term);
+    setSemanticSearchTerm(term);
   };
 
   const displayedColleges = filteredColleges.slice(0, page * CARDS_PER_PAGE);
@@ -59,7 +66,14 @@ export default function HomeClient({ initialColleges }: HomeClientProps) {
           <span className="text-[hsl(var(--accent))]">/</span>data
         </h1>
 
-        <SearchBar onSearch={handleSearch} />
+        <div className="flex space-x-4 mb-4">
+          <div className="flex-1">
+            <SearchBar onSearch={handleSearch} />
+          </div>
+          <div className="flex-1">
+            <SemanticSearcBar onSearch={handleSemanticSearch} />
+          </div>
+        </div>
 
         <div className="mt-4 grid gap-4 grid-cols-3 xl:grid-cols-4">
           {displayedColleges.map((college) => (

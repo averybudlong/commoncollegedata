@@ -52,7 +52,7 @@ const EnrollmentSankey: React.FC<EnrollmentSankeyProps> = ({
         margin={{
           left: 50,
           right: 100,
-          top: 10,
+          top: 25,
           bottom: 25,
         }}
         link={{ stroke: "hsl(var(--foreground))" }}
