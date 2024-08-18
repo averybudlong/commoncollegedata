@@ -11,18 +11,19 @@ from attribute_maps import (
   colsFinancial,
 )
 
-# loading local env variables
+# Loading local env variables
 load_dotenv('../.env.local')
 url: str = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
 key: str = os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY")
 supabase: Client = create_client(url, key)
 
-# loading IPEDS csv data
+# Loading IPEDS csv data
 collegeData = pd.read_csv('hd2022.csv', encoding_errors='replace')
 cdsData = pd.read_csv('adm2022.csv')
 financialData = pd.read_csv('drvf2022.csv')
 headCountData = pd.read_csv('effy2022.csv')
 
+# This function normalizes the data ingested from the IPEDS csv files
 def processMap(dataMap, currentCollege, row):
     for attribute in dataMap:
         value = row[dataMap.get(attribute)]
@@ -30,13 +31,19 @@ def processMap(dataMap, currentCollege, row):
         if attribute in ['latitude', 'longitude']:
             currentCollege[attribute] = value
 
+        elif attribute in ['website', 'app_website']:
+          if not value.startswith('https://') and not value.startswith('http://'):
+            value = 'https://' + value
+          currentCollege[attribute] = value
+
         elif isinstance(value, str):
             currentCollege[attribute] = value if value else None
 
         elif isinstance(value, pd.Series):
             item = value.item() if not value.empty else None
 
-            if item is None or item == "." or (not isinstance(item, str) and math.isnan(item)):
+            # sometimes the column value is a "." when it should be null
+            if item is None or item == '.' or (not isinstance(item, str) and math.isnan(item)):
                 currentCollege[attribute] = None
             else:
                 currentCollege[attribute] = int(item)
@@ -53,7 +60,6 @@ def processMap(dataMap, currentCollege, row):
           if currentCollege[attribute] == None:
              currentCollege[attribute] = 0
               
-
 def getCollegeData(i):
   currentCollege = {}
   collegeDataRow = collegeData.iloc[i]
@@ -81,8 +87,7 @@ def getCollegeData(i):
   return currentCollege
 
 def addAllCollegesToSupabase():
-  # len(collegeData)
-  for i in range(40):
+  for i in range(len(collegeData)):
     newCollege = getCollegeData(i)
     
     if not newCollege:
