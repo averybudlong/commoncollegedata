@@ -18,10 +18,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onOpen, onClose }) => {
     <>
       <div
         className={`fixed top-0 left-0 h-full w-60 z-30 transform transition-all duration-300 ease-in-out
-                    bg-[hsl(var(--background))] text-[hsl(var(--foreground))]
-                    border-r border-[hsl(var(--border))] ${
-                      isOpen ? "translate-x-0" : "-translate-x-full"
-                    }`}
+                    bg-[hsl(var(--background))] text-[hsl(var(--foreground))] shadow-lg 
+                    ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <button
           onClick={onClose}
@@ -41,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onOpen, onClose }) => {
             <li>
               <Button
                 variant="ghost"
-                className="w-full justify-start hover:bg-[hsl(142,71%,45%)] hover:text-[hsl(var(--green-button-text))]"
+                className="w-full justify-start hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--hover-button-text))]"
                 asChild
               >
                 <Link href="/">Dashboard</Link>
@@ -50,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onOpen, onClose }) => {
             <li>
               <Button
                 variant="ghost"
-                className="w-full justify-start hover:bg-[hsl(142,71%,45%)] hover:text-[hsl(var(--green-button-text))]"
+                className="w-full justify-start hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--hover-button-text))]"
                 asChild
               >
                 <Link href="/colleges">Colleges</Link>
@@ -59,7 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onOpen, onClose }) => {
             <li>
               <Button
                 variant="ghost"
-                className="w-full justify-start hover:bg-[hsl(142,71%,45%)] hover:text-[hsl(var(--green-button-text))]"
+                className="w-full justify-start hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--hover-button-text))]"
                 asChild
               >
                 <Link href="/about">About</Link>
