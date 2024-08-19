@@ -5,13 +5,13 @@ import SemanticSearcBar from "../components/SemanticSearchBar";
 import CollegeCard from "../components/CollegeCard";
 import { Courier_Prime } from "next/font/google";
 import React, { useEffect, useMemo, useState } from "react";
-import { College } from "@/types/College";
+import { BasicCollege } from "@/types/BasicCollege";
 import { Button } from "@/components/ui/button";
 
 const CARDS_PER_PAGE = 24;
 
 interface HomeClientProps {
-  initialColleges: College[];
+  initialColleges: BasicCollege[];
 }
 
 interface SearchResult {

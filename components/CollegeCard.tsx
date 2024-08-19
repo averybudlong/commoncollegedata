@@ -11,11 +11,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { College } from "../types/College";
+import { BasicCollege } from "../types/BasicCollege";
 import React from "react";
 
 interface CollegeCardProps {
-  college: College;
+  college: BasicCollege;
 }
 
 const CollegeCard: React.FC<CollegeCardProps> = ({ college }) => {

@@ -56,8 +56,6 @@ export default async function CollegePage({
           app_website={college.app_website}
         />
       </div>
-
-      <div className="container mx-auto px-4 py-8">{data}</div>
     </>
   );
 }

@@ -59,7 +59,7 @@ export async function semanticSearch(
     // Perform the search
     const { data, error } = await supabaseClient.rpc("match_documents", {
       query_embedding: queryEmbedding,
-      match_threshold: 0.75, // Adjust this value to control the similarity threshold
+      match_threshold: 0.8, // Adjust this value to control the similarity threshold
       match_count: limit,
     });
 
