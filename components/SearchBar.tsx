@@ -30,7 +30,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     <div className="relative">
       <Input
         type="search"
-        placeholder="Search Colleges"
+        placeholder="Keyword Search"
         className="pl-4 pr-10"
         value={searchTerm}
         onChange={handleInputChange}

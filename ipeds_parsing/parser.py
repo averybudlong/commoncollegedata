@@ -99,6 +99,6 @@ def addAllCollegesToSupabase():
     except Exception as e:
       print(e)
 
-addAllCollegesToSupabase()
+# addAllCollegesToSupabase()
     
     

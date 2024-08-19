@@ -1,0 +1,26 @@
+// postgresql function that is needed to compute nearest vectors
+
+CREATE OR REPLACE FUNCTION match_documents(
+  query_embedding vector(1536),
+  match_threshold float,
+  match_count int
+)
+RETURNS TABLE (
+  id integer,
+  name text,
+  similarity float
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    colleges.id,
+    colleges.name,
+    1 - (colleges.embedding <=> query_embedding) AS similarity
+  FROM colleges
+  WHERE 1 - (colleges.embedding <=> query_embedding) > match_threshold
+  ORDER BY colleges.embedding <=> query_embedding
+  LIMIT match_count;
+END;
+$$;
