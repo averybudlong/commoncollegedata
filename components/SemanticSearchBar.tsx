@@ -1,24 +1,35 @@
-"use client";
-
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { IconSearch } from "@tabler/icons-react";
+import { handleSemanticSearch } from "../app/utils/searchUtils";
 
-interface SemanticSearchBarProps {
-  onSearch: (term: string) => void;
+interface SearchResult {
+  id: number;
+  name: string;
+  similarity: number;
 }
 
-const SemanticSearchBar: React.FC<SemanticSearchBarProps> = ({ onSearch }) => {
-  const [searchTerm, setSearchterm] = useState("");
+interface SemanticSearchBarProps {
+  onSearchResults: (results: SearchResult[]) => void;
+}
+
+const SemanticSearchBar: React.FC<SemanticSearchBarProps> = ({
+  onSearchResults,
+}) => {
+  const [query, setQuery] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch(searchTerm);
+    handleSemanticSearch(query, setIsLoading, (results) => {
+      onSearchResults(results);
+      setQuery(""); // Clear the input after search
+    });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchterm(e.target.value);
+    setQuery(e.target.value);
   };
 
   return (
@@ -28,7 +39,7 @@ const SemanticSearchBar: React.FC<SemanticSearchBarProps> = ({ onSearch }) => {
           type="search"
           placeholder="Semantic Search"
           className="pl-4 pr-10"
-          value={searchTerm}
+          value={query}
           onChange={handleInputChange}
         />
         <IconSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -37,7 +48,7 @@ const SemanticSearchBar: React.FC<SemanticSearchBarProps> = ({ onSearch }) => {
         type="submit"
         className="ml-2 hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--hover-button-text))]"
       >
-        Search
+        {isLoading ? "Searching..." : "Search"}
       </Button>
     </form>
   );

@@ -1,9 +1,9 @@
 import { getCollege } from "@/app/utils/supabaseUtils";
-import EnrollmentSankey from "@/components/collegePageComponents/EnrollmentSankey";
-import AdmissionCard from "@/components/collegePageComponents/AdmissionCard";
-import LinksCard from "@/components/collegePageComponents/LinksCard";
-import GeneralCard from "@/components/collegePageComponents/GeneralCard";
-import { College } from "@/types/College"
+import EnrollmentSankey from "@/components/college_page_components/EnrollmentSankey";
+import AdmissionCard from "@/components/college_page_components/AdmissionCard";
+import LinksCard from "@/components/college_page_components/LinksCard";
+import GeneralCard from "@/components/college_page_components/GeneralCard";
+import { College } from "@/types/College";
 
 // the id is the urlName
 export default async function CollegePage({
@@ -17,7 +17,7 @@ export default async function CollegePage({
     return <div>College not found</div>;
   }
 
-  const college: College = collegeData
+  const college: College = collegeData;
 
   const data = Object.entries(college).map(([propertyName, val]) => (
     <li key={propertyName}>{`${propertyName}: ${val}`}</li>
