@@ -34,9 +34,18 @@ export default function HomeClient({ initialColleges }: HomeClientProps) {
 
   const filteredColleges = useMemo(() => {
     if (lastUsedSearch === "semantic") {
-      return initialColleges.filter((college) =>
-        semanticSearchResults.some((result) => result.id === college.id)
-      );
+      return initialColleges
+        .filter((college) => {
+          const matchingResult = semanticSearchResults.find(
+            (result) => result.id === college.id
+          );
+          if (matchingResult) {
+            college.similarity = matchingResult.similarity;
+            return true;
+          }
+          return false;
+        })
+        .sort((a, b) => (b.similarity || 0) - (a.similarity || 0));
     } else {
       return initialColleges.filter((college) =>
         college.name.toLowerCase().includes(keywordSearchTerm.toLowerCase())
@@ -51,6 +60,9 @@ export default function HomeClient({ initialColleges }: HomeClientProps) {
 
   useEffect(() => {
     setPage(1);
+    filteredColleges.forEach((college) => {
+      college.similarity = undefined;
+    });
   }, [keywordSearchTerm, semanticSearchResults]);
 
   const handleKeywordSearch = (term: string) => {
@@ -99,9 +111,9 @@ export default function HomeClient({ initialColleges }: HomeClientProps) {
         </div>
 
         <div className="mt-4 grid gap-4 grid-cols-3 xl:grid-cols-4">
-          {displayedColleges.map((college) => (
-            <CollegeCard key={college.id} college={college} />
-          ))}
+          {displayedColleges.map((college) => {
+            return <CollegeCard key={college.id} college={college} />;
+          })}
         </div>
         {filteredColleges.length > page * CARDS_PER_PAGE && (
           <div>

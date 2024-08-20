@@ -46,7 +46,10 @@ const CollegeCard: React.FC<CollegeCardProps> = ({ college }) => {
           </p>
         </CardContent>
         <CardFooter>
-          <p className="overflow-hidden">ID: {college.id}</p>
+          <p className="overflow-hidden">
+            {college.similarity &&
+              "Similarity: " + Math.round(college.similarity * 100) + "%"}
+          </p>
         </CardFooter>
       </Card>
     </Link>

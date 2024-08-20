@@ -5,6 +5,7 @@ interface BasicCollege {
   state: string;
   enrolled: number;
   image_url: string;
+  similarity?: number;
 }
 
 export type { BasicCollege };
