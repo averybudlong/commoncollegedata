@@ -10,6 +10,7 @@ from attribute_maps import (
   colsHeadCountGrad,
   colsFinancial,
 )
+from custom_order import customOrder
 
 # Loading local env variables
 load_dotenv('../.env.local')
@@ -18,10 +19,13 @@ key: str = os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY")
 supabase: Client = create_client(url, key)
 
 # Loading IPEDS csv data
-collegeData = pd.read_csv('hd2022.csv', encoding_errors='replace')
-cdsData = pd.read_csv('adm2022.csv')
-financialData = pd.read_csv('drvf2022.csv')
-headCountData = pd.read_csv('effy2022.csv')
+def loadData():
+  collegeData = pd.read_csv('hd2022.csv', encoding_errors='replace')
+  cdsData = pd.read_csv('adm2022.csv')
+  financialData = pd.read_csv('drvf2022.csv')
+  headCountData = pd.read_csv('effy2022.csv')
+
+# loadData()
 
 # This function normalizes the data ingested from the IPEDS csv files
 def processMap(dataMap, currentCollege, row):
@@ -100,5 +104,36 @@ def addAllCollegesToSupabase():
       print(e)
 
 # addAllCollegesToSupabase()
+
+def debug():
+  response = supabase.table('colleges').select('*').eq('name', 'Southern New Hampshire University').execute()
+  print(response.data[0])
+
+# debug()
+
+def setCustomOrder():
+  for i in range(len(customOrder)):
+    response = supabase.table('colleges').update({'custom_order': i}).eq("name", customOrder[i]).execute()
+
+# setCustomOrder()
+
+def addImages():
+    image_dir = '../public/images'
+    for filename in os.listdir(image_dir):
+        print(f"Processing file: {filename}")
+        if filename == "placeholder.jpg":
+            print("Skipping placeholder image")
+            continue
+   
+        try:
+            uid = filename[0:6]
+            response = supabase.table('colleges').update({'image_url': filename}).eq("id", uid).execute()
+            print(f"Updated image for id: {uid}")
+        except Exception as e:
+            print(f"Error processing {filename}: {str(e)}")
+
+    print("Image update process completed")
+  
+addImages()
     
     

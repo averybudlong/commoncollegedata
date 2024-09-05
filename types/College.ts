@@ -79,6 +79,8 @@ interface College {
   research_per_capita_pub: number;
   research_per_capita_priv: number;
   image_url: string;
+  acceptance_rate: number;
+  custom_order: number;
 }
 
 export type { College };

@@ -26,7 +26,6 @@ export const handleSemanticSearch = async (
     setResults(data);
   } catch (error) {
     console.error("Error performing Search:", error);
-    // add some error handling here l8er
   } finally {
     setIsLoading(false);
   }

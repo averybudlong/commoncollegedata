@@ -12,7 +12,8 @@ const TABLE_NAME = "colleges";
 export async function getAllColleges(): Promise<BasicCollege[]> {
   const { data, error } = await supabase
     .from(TABLE_NAME)
-    .select("id, name, city, state, enrolled");
+    .select("id, name, city, state, enrolled, acceptance_rate, image_url")
+    .order("custom_order", { ascending: true, nullsFirst: false });
   if (error) {
     console.error("Error fetching colleges:", error);
     return [];

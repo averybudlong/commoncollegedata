@@ -20,13 +20,14 @@ interface CollegeCardProps {
 
 const CollegeCard: React.FC<CollegeCardProps> = ({ college }) => {
   const PLACEHOLDER_IMAGE = "/images/placeholder.jpg";
+  const image_url = college.image_url ? "/images/" + college.image_url : null;
 
   return (
     <Link href={`/college/${college.id}`}>
       <Card className="max-w-s hover:scale-105 transform transition duration-200">
         <div className="relative w-full h-48">
           <Image
-            src={college.image_url || PLACEHOLDER_IMAGE}
+            src={image_url || PLACEHOLDER_IMAGE}
             alt={`${college.name} campus`}
             fill
             style={{ objectFit: "cover" }}
@@ -41,12 +42,16 @@ const CollegeCard: React.FC<CollegeCardProps> = ({ college }) => {
         </CardHeader>
         <CardContent>
           <p>
-            Undergraduate Enrollment:{" "}
-            {college.enrolled ? college.enrolled.toString() : "null"}
+            Undergrad Enrollment:{" "}
+            <b>{college.enrolled ? college.enrolled.toString() : "null"}</b>{" "}
+            <br />
+            ID: <b>{college.id}</b> <br />
+            Acceptance Rate:{" "}
+            <b>{(college.acceptance_rate * 100).toFixed(2)}%</b>
           </p>
         </CardContent>
         <CardFooter>
-          <p className="overflow-hidden">
+          <p className="overflow-hidden text-sm text-muted-foreground">
             {college.similarity &&
               "Similarity: " + Math.round(college.similarity * 100) + "%"}
           </p>
