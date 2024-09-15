@@ -57,5 +57,5 @@ customOrder = [
   'New York University',
   'Georgetown University',
   'University of California-Santa Barbara',
-  'University of Notre Dame'
+  'University of Notre Dame',
 ]

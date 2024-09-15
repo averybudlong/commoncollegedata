@@ -30,6 +30,7 @@ const CollegeCard: React.FC<CollegeCardProps> = ({ college }) => {
             src={image_url || PLACEHOLDER_IMAGE}
             alt={`${college.name} campus`}
             fill
+            sizes="35vw"
             style={{ objectFit: "cover" }}
             className="rounded-t-2xl"
           />
@@ -45,7 +46,6 @@ const CollegeCard: React.FC<CollegeCardProps> = ({ college }) => {
             Undergrad Enrollment:{" "}
             <b>{college.enrolled ? college.enrolled.toString() : "null"}</b>{" "}
             <br />
-            ID: <b>{college.id}</b> <br />
             Acceptance Rate:{" "}
             <b>{(college.acceptance_rate * 100).toFixed(2)}%</b>
           </p>
