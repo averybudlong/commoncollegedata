@@ -51,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onOpen, onClose }) => {
                 className="w-full justify-start hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--hover-button-text))]"
                 asChild
               >
-                <Link href="/colleges">Colleges</Link>
+                <Link href="/leaderboard">College Leaderboard</Link>
               </Button>
             </li>
             <li>
