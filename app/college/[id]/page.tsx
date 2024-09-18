@@ -5,6 +5,7 @@ import LinksCard from "@/components/college_page_components/LinksCard";
 import GeneralCard from "@/components/college_page_components/GeneralCard";
 import FinancialCard from "@/components/college_page_components/FinancialCard";
 import StandardizedTestingCard from "@/components/college_page_components/StandardizedTestingCard";
+import DemographicCard from "@/components/college_page_components/DemographicCard";
 import { College } from "@/types/College";
 
 // the id is the urlName
@@ -95,6 +96,11 @@ export default async function CollegePage({
             percentSubmitted={college.act_pct}
           />
         </div>
+      </div>
+
+      <div>
+        <h2 className="mt-8 font-bold text-xl">Demographics</h2>
+        <DemographicCard {...college} />
       </div>
     </>
   );
