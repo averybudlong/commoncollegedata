@@ -10,26 +10,18 @@ import React from "react";
 
 interface StandardizedTestingCardProps {
   name: string;
-  sat25: number;
-  sat50: number;
-  sat75: number;
-  satPct: number;
-  act25: number;
-  act50: number;
-  act75: number;
-  actPct: number;
+  percentile25: number;
+  percentile50: number;
+  percentile75: number;
+  percentSubmitted: number;
 }
 
-const LinksCard: React.FC<StandardizedTestingCardProps> = ({
+const StandardizedTestingCard: React.FC<StandardizedTestingCardProps> = ({
   name,
-  sat25,
-  sat50,
-  sat75,
-  satPct,
-  act25,
-  act50,
-  act75,
-  actPct,
+  percentile25,
+  percentile50,
+  percentile75,
+  percentSubmitted,
 }) => {
   return (
     <Card>
@@ -37,12 +29,25 @@ const LinksCard: React.FC<StandardizedTestingCardProps> = ({
         <CardTitle>{name}</CardTitle>
       </CardHeader>
       <CardContent>
-        {sat75}
-        {act75}
+        <ul className="space-y-2">
+          <li>
+            Percent of Students Submitting:{" "}
+            <b>{percentSubmitted == null ? "N/A" : percentSubmitted + "%"}</b>
+          </li>
+          <li>
+            75th Percentile: <b>{percentile75 || "N/A"}</b>
+          </li>
+          <li>
+            50th Percentile: <b>{percentile50 || "N/A"}</b>
+          </li>
+          <li>
+            25th Percentile: <b>{percentile25 || "N/A"}</b>
+          </li>
+        </ul>
       </CardContent>
       <CardFooter></CardFooter>
     </Card>
   );
 };
 
-export default LinksCard;
+export default StandardizedTestingCard;

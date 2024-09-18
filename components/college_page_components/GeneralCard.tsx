@@ -7,12 +7,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import React from "react";
+import CollegeCard from "../CollegeCard";
 
 interface GeneralCardProps {
   state: string;
   city: string;
   name: string;
   revenue_pub: number;
+  longitude: number;
+  latitude: number;
 }
 
 const GeneralCard: React.FC<GeneralCardProps> = ({
@@ -20,6 +23,8 @@ const GeneralCard: React.FC<GeneralCardProps> = ({
   city,
   name,
   revenue_pub,
+  longitude,
+  latitude,
 }) => {
   return (
     <Card>
@@ -28,6 +33,9 @@ const GeneralCard: React.FC<GeneralCardProps> = ({
       </CardHeader>
       <CardContent>
         <p>{`${city}, ${state}`}</p>
+        <p>
+          ({latitude}, {longitude})
+        </p>
       </CardContent>
       <CardFooter>
         <p>{revenue_pub ? "Public University" : "Private University"}</p>

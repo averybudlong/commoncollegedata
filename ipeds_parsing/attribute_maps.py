@@ -14,6 +14,10 @@ colsCollege = {
     'latitude': 'LATITUDE',
 }
 
+# For 'standardized_test': 'ADMCON7'
+# 1	Required to be considered for admission
+# 5	Not required for admission, but considered if submitted
+# 3	Not considered for admission, even if submitted
 colsCDS = {
     'standardized_test': 'ADMCON7',
     'applicants': 'APPLCN',

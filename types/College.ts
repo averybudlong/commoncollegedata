@@ -8,7 +8,7 @@ interface College {
   app_website: string;
   longitude: number;
   latitude: number;
-  standardized_test: string;
+  standardized_test: number;
   applicants: number;
   applicants_m: number;
   applicants_w: number;

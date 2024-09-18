@@ -17,7 +17,7 @@ const FinancialCard: React.FC<College> = (college) => {
   const isPublic = !!college.revenue_pub;
   return (
     <div>
-      <h2 className="my-8 font-bold">Financial Data</h2>
+      <h2 className="my-8 font-bold text-xl">Financial Data</h2>
       <div className="mr-10 my-4 grid grid-cols-2 gap-6">
         <HorizontalBarChart
           data={[

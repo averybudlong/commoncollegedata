@@ -46,7 +46,7 @@ const SemanticSearchBar: React.FC<SemanticSearchBarProps> = ({
         <div className="relative flex-grow">
           <Input
             type="search"
-            placeholder="Semantic Search"
+            placeholder="Semantic Search (ivy league, by the beach, cold, etc)"
             className="pl-4 pr-10"
             value={query}
             onChange={handleInputChange}

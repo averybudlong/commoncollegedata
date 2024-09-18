@@ -4,6 +4,7 @@ import AdmissionCard from "@/components/college_page_components/AdmissionCard";
 import LinksCard from "@/components/college_page_components/LinksCard";
 import GeneralCard from "@/components/college_page_components/GeneralCard";
 import FinancialCard from "@/components/college_page_components/FinancialCard";
+import StandardizedTestingCard from "@/components/college_page_components/StandardizedTestingCard";
 import { College } from "@/types/College";
 
 // the id is the urlName
@@ -24,6 +25,17 @@ export default async function CollegePage({
     <li key={propertyName}>{`${propertyName}: ${val}`}</li>
   ));
 
+  let policyMessage;
+  if (college.standardized_test === 1) {
+    policyMessage = "Required to be considered for admission";
+  } else if (college.standardized_test === 3) {
+    policyMessage = "Not considered for admission, even if submitted";
+  } else if (college.standardized_test === 5) {
+    policyMessage = "Not required for admission, but considered if submitted";
+  } else {
+    policyMessage = "Unknown Policy";
+  }
+
   return (
     <>
       <h1 className="font-black mt-6 mb-2 text-left text-3xl">
@@ -31,7 +43,7 @@ export default async function CollegePage({
       </h1>
 
       <div className="container mx-auto px-4 py-8">
-        <h2 className="font-bold">Admission Data</h2>
+        <h2 className="font-bold text-xl">Admission Data</h2>
         <EnrollmentSankey
           applicants={college.applicants}
           admitted={college.admitted}
@@ -46,6 +58,8 @@ export default async function CollegePage({
           state={college.state}
           name={college.name}
           revenue_pub={college.revenue_pub}
+          longitude={college.longitude}
+          latitude={college.latitude}
         />
         <AdmissionCard
           applicants={college.applicants}
@@ -59,6 +73,29 @@ export default async function CollegePage({
       </div>
 
       <FinancialCard {...college} />
+
+      <div>
+        <h2 className="mt-8 font-bold text-xl">Standardized Testing</h2>
+        <h3 className="font-semibold text-[hsl(var(--accent))] text-center">
+          {policyMessage}
+        </h3>
+        <div className="mr-10 my-4 grid grid-cols-2 gap-6">
+          <StandardizedTestingCard
+            name="SAT"
+            percentile25={college.sat_m25 + college.sat_rw25}
+            percentile50={college.sat_m50 + college.sat_rw50}
+            percentile75={college.sat_m75 + college.sat_rw75}
+            percentSubmitted={college.sat_pct}
+          />
+          <StandardizedTestingCard
+            name="ACT"
+            percentile25={college.act25}
+            percentile50={college.act50}
+            percentile75={college.act75}
+            percentSubmitted={college.act_pct}
+          />
+        </div>
+      </div>
     </>
   );
 }
