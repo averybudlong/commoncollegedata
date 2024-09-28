@@ -10,9 +10,12 @@ import {
   Tooltip,
 } from "recharts";
 
-interface DynamicPieChartProps {
-  applicants_m: number;
-  applicants_w: number;
+interface PieChartProps {
+  value1: number;
+  value2: number;
+  name1: string;
+  name2: string;
+  colors: Array<string>;
 }
 
 interface CustomizedLabelProps {
@@ -24,16 +27,19 @@ interface CustomizedLabelProps {
   percent: number;
 }
 
-const GenderPieChart: React.FC<DynamicPieChartProps> = ({
-  applicants_m,
-  applicants_w,
+const TwoChoicePieChart: React.FC<PieChartProps> = ({
+  value1,
+  value2,
+  name1,
+  name2,
+  colors,
 }) => {
   const data = [
-    { name: "Male", value: applicants_m },
-    { name: "Female", value: applicants_w },
+    { name: name1, value: value1 },
+    { name: name2, value: value2 },
   ];
 
-  const COLORS = ["#2a71f5", "#f05dc1"];
+  const COLORS = colors;
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
@@ -85,4 +91,4 @@ const GenderPieChart: React.FC<DynamicPieChartProps> = ({
   );
 };
 
-export default GenderPieChart;
+export default TwoChoicePieChart;

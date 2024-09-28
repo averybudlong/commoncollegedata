@@ -5,7 +5,8 @@ import LinksCard from "@/components/college_page_components/LinksCard";
 import GeneralCard from "@/components/college_page_components/GeneralCard";
 import FinancialCard from "@/components/college_page_components/FinancialCard";
 import StandardizedTestingCard from "@/components/college_page_components/StandardizedTestingCard";
-import DemographicCard from "@/components/college_page_components/DemographicCard";
+import UndergradDemographicsCard from "@/components/college_page_components/UndergradDemographicsCard";
+import GradDemographicCard from "@/components/college_page_components/GradDemographicsCard";
 import { College } from "@/types/College";
 
 // the id is the urlName
@@ -52,30 +53,34 @@ export default async function CollegePage({
         />
       </div>
 
-      <div className="mb-4 mr-10 min-w-[48rem] w-auto grid gap-6 grid-cols-3">
-        {/* revenue_pub will be null if its a private university */}
-        <GeneralCard
-          city={college.city}
-          state={college.state}
-          name={college.name}
-          revenue_pub={college.revenue_pub}
-          longitude={college.longitude}
-          latitude={college.latitude}
-        />
-        <AdmissionCard
-          applicants={college.applicants}
-          admitted={college.admitted}
-          enrolled_cycle={college.enrolled_cycle}
-        />
-        <LinksCard
-          website={college.website}
-          app_website={college.app_website}
-        />
+      <div className="container mx-auto px-4 py-4">
+        <div className="mb-4 mr-10 min-w-[48rem] w-auto grid gap-6 grid-cols-3">
+          {/* revenue_pub will be null if its a private university */}
+          <GeneralCard
+            city={college.city}
+            state={college.state}
+            name={college.name}
+            revenue_pub={college.revenue_pub}
+            longitude={college.longitude}
+            latitude={college.latitude}
+          />
+          <AdmissionCard
+            applicants={college.applicants}
+            admitted={college.admitted}
+            enrolled_cycle={college.enrolled_cycle}
+          />
+          <LinksCard
+            website={college.website}
+            app_website={college.app_website}
+          />
+        </div>
       </div>
 
-      <FinancialCard {...college} />
+      <div className="container mx-auto px-4 py-4">
+        <FinancialCard {...college} />
+      </div>
 
-      <div>
+      <div className="container mx-auto px-4 py-4">
         <h2 className="mt-8 font-bold text-xl">Standardized Testing</h2>
         <h3 className="font-semibold text-[hsl(var(--accent))] text-center">
           {policyMessage}
@@ -98,9 +103,14 @@ export default async function CollegePage({
         </div>
       </div>
 
-      <div>
-        <h2 className="mt-8 font-bold text-xl">Demographics</h2>
-        <DemographicCard {...college} />
+      <div className="container mx-auto px-4 py-4">
+        <div className="my-8">
+          <UndergradDemographicsCard {...college} />
+        </div>
+
+        <div className="mt-16">
+          <GradDemographicCard {...college} />
+        </div>
       </div>
     </>
   );

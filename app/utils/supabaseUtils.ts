@@ -39,5 +39,7 @@ export async function getCollege(id: number): Promise<College | null> {
     return null;
   }
 
+  data.revenue_priv = Math.abs(data.revenue_priv);
+  data.revenue_pub = Math.abs(data.revenue_pub);
   return data as College;
 }

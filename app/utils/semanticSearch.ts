@@ -47,7 +47,6 @@ export async function semanticSearch(
 ): Promise<SearchResult[]> {
   try {
     const processedQuery = await processQueryWithGPT(query);
-    console.log("Processed Query: ", processedQuery);
 
     // Generate embedding for the query
     const embeddingResponse = await openai.embeddings.create({
