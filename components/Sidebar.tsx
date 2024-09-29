@@ -2,7 +2,11 @@
 "use client";
 
 import React from "react";
-import { IconArrowBarLeft, IconArrowBarRight } from "@tabler/icons-react";
+import {
+  IconArrowBarLeft,
+  IconArrowBarRight,
+  IconCrown,
+} from "@tabler/icons-react";
 import ModeToggle from "../components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -51,7 +55,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onOpen, onClose }) => {
                 className="w-full justify-start hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--hover-button-text))]"
                 asChild
               >
-                <Link href="/leaderboard">College Leaderboard</Link>
+                <Link
+                  href="/leaderboard"
+                  className="flex items-center gap-2 text-yellow-600 font-extrabold"
+                >
+                  College Leaderboard <IconCrown />
+                </Link>
               </Button>
             </li>
             <li>
