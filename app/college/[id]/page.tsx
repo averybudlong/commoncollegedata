@@ -8,6 +8,7 @@ import StandardizedTestingCard from "@/components/college_page_components/Standa
 import UndergradDemographicsCard from "@/components/college_page_components/UndergradDemographicsCard";
 import GradDemographicCard from "@/components/college_page_components/GradDemographicsCard";
 import { College } from "@/types/College";
+import DemographicsCard from "@/components/college_page_components/DemographicsCard";
 
 // the id is the urlName
 export default async function CollegePage({
@@ -39,7 +40,7 @@ export default async function CollegePage({
   }
 
   return (
-    <>
+    <div className="mb-12">
       <h1 className="font-black mt-6 mb-2 text-left text-3xl">
         {college.name}
       </h1>
@@ -83,7 +84,7 @@ export default async function CollegePage({
       <div className="container mx-auto px-4 py-4">
         <h2 className="mt-8 font-bold text-xl">Standardized Testing</h2>
         <h3 className="font-semibold text-[hsl(var(--accent))] text-center">
-          {policyMessage}
+          {policyMessage} (for 2022)
         </h3>
         <div className="mr-10 my-4 grid grid-cols-2 gap-6">
           <StandardizedTestingCard
@@ -112,6 +113,10 @@ export default async function CollegePage({
           <GradDemographicCard {...college} />
         </div>
       </div>
-    </>
+
+      <div className="container mx-auto px-4 py-4">
+        <DemographicsCard {...college} />
+      </div>
+    </div>
   );
 }
