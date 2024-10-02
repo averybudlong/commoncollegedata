@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { BasicCollege } from "@/types/BasicCollege";
 import { LeaderboardCollege } from "@/types/LeaderboardCollege";
+import { getCollege } from "@/app/utils/supabaseUtils";
 
 interface LeaderboardClientProps {
   colleges: BasicCollege[];
@@ -19,6 +20,8 @@ export default function LeaderboardClient({
   const [numColleges, setNumColleges] = useState(10);
   const [input, setInput] = useState("10");
   const [error, setError] = useState("");
+  const [selectedCollege, setSelectedCollege] =
+    useState<LeaderboardCollege | null>(null);
 
   const currentColleges = useMemo(() => {
     return topColleges.slice(0, numColleges);
@@ -37,6 +40,25 @@ export default function LeaderboardClient({
       setError("");
     } else {
       setError("Enter a number between 1 and 100");
+    }
+  };
+
+  const handleCollegeSelect = async (collegeId: number) => {
+    try {
+      const college = await getCollege(collegeId);
+      if (college) {
+        const endowmentValue = college.revenue_pub
+          ? college.endowment_per_capita_pub
+          : college.endowment_per_capita_priv;
+        setSelectedCollege({
+          id: college.id,
+          name: college.name,
+          value: endowmentValue,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching college data:", error);
+      setError("Failed to fetch college data");
     }
   };
 
@@ -67,7 +89,21 @@ export default function LeaderboardClient({
         ))}
       </ol>
 
-      <LeaderboardSearchBar colleges={colleges} />
+      <LeaderboardSearchBar
+        colleges={colleges}
+        onCollegeSelect={handleCollegeSelect}
+      />
+
+      {selectedCollege && (
+        <div className="mt-4">
+          <h2 className="text-xl font-semibold mb-2">
+            Selected College Endowment
+          </h2>
+          <p>
+            {selectedCollege.name}: ${selectedCollege.value.toLocaleString()}
+          </p>
+        </div>
+      )}
     </div>
   );
 }

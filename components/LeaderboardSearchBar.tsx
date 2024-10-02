@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { IconSearch } from "@tabler/icons-react";
@@ -8,10 +6,12 @@ import { BasicCollege } from "@/types/BasicCollege";
 
 interface LeaderboardSearchBarProps {
   colleges: BasicCollege[];
+  onCollegeSelect: (collegeId: number) => void;
 }
 
 const LeaderboardSearchBar: React.FC<LeaderboardSearchBarProps> = ({
   colleges,
+  onCollegeSelect,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [matchingColleges, setMatchingColleges] = useState<BasicCollege[]>([]);
@@ -40,7 +40,7 @@ const LeaderboardSearchBar: React.FC<LeaderboardSearchBarProps> = ({
   const handleCollegeSelect = (college: BasicCollege) => {
     setSearchTerm(college.name);
     setMatchingColleges([]);
-    console.log("Selected college ID:", college.id);
+    onCollegeSelect(college.id);
   };
 
   useEffect(() => {
