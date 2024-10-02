@@ -27,7 +27,7 @@ const LeaderboardSearchBar: React.FC<LeaderboardSearchBarProps> = ({
           )
           .slice(0, 5); // Limit to 5 results
         setMatchingColleges(matches);
-      }, 300),
+      }, 100),
     [colleges]
   );
 

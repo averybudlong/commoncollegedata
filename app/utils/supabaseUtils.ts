@@ -50,9 +50,8 @@ export async function getTopCollegesByEndowment(
 ): Promise<LeaderboardCollege[]> {
   const { data, error } = await supabase
     .from(TABLE_NAME)
-    .select("id, name, endowment_per_capita_pub, endowment_per_capita_priv")
-    .order("endowment_per_capita_pub", { ascending: false, nullsFirst: false })
-    .order("endowment_per_capita_priv", { ascending: false, nullsFirst: false })
+    .select("id, name, endowment_per_capita")
+    .order("endowment_per_capita", { ascending: false, nullsFirst: false })
     .limit(limit);
 
   if (error) {
@@ -62,7 +61,6 @@ export async function getTopCollegesByEndowment(
 
   return data.map((college) => ({
     ...college,
-    value:
-      college.endowment_per_capita_pub || college.endowment_per_capita_priv,
+    value: college.endowment_per_capita,
   })) as LeaderboardCollege[];
 }

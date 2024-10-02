@@ -81,6 +81,7 @@ interface College {
   image_url: string;
   acceptance_rate: number;
   custom_order: number;
+  endowment_per_capita: number;
 }
 
 export type { College };
