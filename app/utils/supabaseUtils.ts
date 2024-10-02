@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { College } from "../../types/College";
-import { BasicCollege } from "../../types/BasicCollege";
+import { BasicCollege } from "@/types/BasicCollege";
+import { LeaderboardCollege } from "@/types/LeaderboardCollege";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -42,4 +43,26 @@ export async function getCollege(id: number): Promise<College | null> {
   data.revenue_priv = Math.abs(data.revenue_priv);
   data.revenue_pub = Math.abs(data.revenue_pub);
   return data as College;
+}
+
+export async function getTopCollegesByEndowment(
+  limit: number = 10
+): Promise<LeaderboardCollege[]> {
+  const { data, error } = await supabase
+    .from(TABLE_NAME)
+    .select("id, name, endowment_per_capita_pub, endowment_per_capita_priv")
+    .order("endowment_per_capita_pub", { ascending: false, nullsFirst: false })
+    .order("endowment_per_capita_priv", { ascending: false, nullsFirst: false })
+    .limit(limit);
+
+  if (error) {
+    console.error("Error fetching top colleges by endowment:", error);
+    return [];
+  }
+
+  return data.map((college) => ({
+    ...college,
+    value:
+      college.endowment_per_capita_pub || college.endowment_per_capita_priv,
+  })) as LeaderboardCollege[];
 }

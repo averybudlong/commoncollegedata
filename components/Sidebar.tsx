@@ -57,9 +57,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onOpen, onClose }) => {
               >
                 <Link
                   href="/leaderboard"
-                  className="flex items-center gap-2 text-yellow-600 font-extrabold"
+                  className="flex items-center gap-2 text-yellow-600"
                 >
-                  College Leaderboard <IconCrown />
+                  <span className="font-extrabold">College Leaderboard</span>{" "}
+                  <IconCrown />
                 </Link>
               </Button>
             </li>
