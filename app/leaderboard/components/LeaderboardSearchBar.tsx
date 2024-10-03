@@ -25,7 +25,7 @@ const LeaderboardSearchBar: React.FC<LeaderboardSearchBarProps> = ({
           .filter((college) =>
             college.name.toLowerCase().includes(term.toLowerCase())
           )
-          .slice(0, 5); // Limit to 5 results
+          .slice(0, 10); // Limit to 5 results
         setMatchingColleges(matches);
       }, 100),
     [colleges]
@@ -63,7 +63,7 @@ const LeaderboardSearchBar: React.FC<LeaderboardSearchBarProps> = ({
     <div className="relative w-64" ref={searchBarRef}>
       <Input
         type="search"
-        placeholder="Search colleges..."
+        placeholder="Add College to Compare"
         className="pl-4 pr-10"
         value={searchTerm}
         onChange={handleInputChange}

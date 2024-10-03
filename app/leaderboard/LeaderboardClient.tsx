@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import LeaderboardSearchBar from "@/components/LeaderboardSearchBar";
+import LeaderboardSearchBar from "./components/LeaderboardSearchBar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { BasicCollege } from "@/types/BasicCollege";
 import { LeaderboardCollege } from "@/types/LeaderboardCollege";
 import { getCollege } from "@/app/utils/supabaseUtils";
+import LeaderboardChart from "./components/LeaderboardChart";
 
 interface LeaderboardClientProps {
   colleges: BasicCollege[];
@@ -23,9 +24,26 @@ export default function LeaderboardClient({
   const [selectedCollege, setSelectedCollege] =
     useState<LeaderboardCollege | null>(null);
 
-  const currentColleges = useMemo(() => {
-    return topColleges.slice(0, numColleges);
-  }, [topColleges, numColleges]);
+  const data = useMemo(() => {
+    const currentColleges = topColleges.slice(0, numColleges);
+    let chartData = currentColleges.map((college) => ({
+      name: college.name,
+      value: college.value,
+    }));
+
+    if (selectedCollege) {
+      // Add the selected college to the chart data
+      chartData.push({
+        name: `${selectedCollege.name} (Selected)`,
+        value: selectedCollege.value,
+      });
+
+      // Sort the data to maintain the order
+      chartData.sort((a, b) => b.value - a.value);
+    }
+
+    return chartData;
+  }, [topColleges, numColleges, selectedCollege]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -81,29 +99,14 @@ export default function LeaderboardClient({
 
       {error && <p className="text-red-600">{error}</p>}
 
-      <ol className="list-decimal list-inside mb-8">
-        {currentColleges.map((college, i) => (
-          <li key={college.id} className="mb-1">
-            {college.name}: ${college.value.toLocaleString()}
-          </li>
-        ))}
-      </ol>
+      <LeaderboardChart data={data} title={"Endowment Per Capita"} />
 
-      <LeaderboardSearchBar
-        colleges={colleges}
-        onCollegeSelect={handleCollegeSelect}
-      />
-
-      {selectedCollege && (
-        <div className="mt-4">
-          <h2 className="text-xl font-semibold mb-2">
-            Selected College Endowment
-          </h2>
-          <p>
-            {selectedCollege.name}: ${selectedCollege.value.toLocaleString()}
-          </p>
-        </div>
-      )}
+      <div className="mt-4">
+        <LeaderboardSearchBar
+          colleges={colleges}
+          onCollegeSelect={handleCollegeSelect}
+        />
+      </div>
     </div>
   );
 }
